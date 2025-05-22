@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.game-header
+{
+  position: relative;
+  height: 400px;
+}
+
+.game-container{
+
+  position: absolute;
+  top: 50%;
+  right:40%;
+  padding: 2rem;
+  border-style: inset;
+  border-color: grey;
+  background-color: rgba(0, 0, 0, 0.861);
+  color: aliceblue;
+  border-width:thick;
+  /* text-align: center; */
+}
+
+.move-history{
+  position: absolute;
+  border-style: inset;
+  border-color: grey;
+  background-color: rgba(0, 0, 0, 0.861);
+  color: aliceblue;
+  border-width:thick;
+  top: 130%;
+  right:40%;
+  font-size: medium;
+
+}
+
+#players{
+  list-style: none;
+  padding: 5px;
+  border-color: darkblue;
+
+}
+
+.player-name{
+  margin: 5px;
+
+}
+
+.player-symbol{
+  margin: 10px;
+
+
+}
+
+.game-board
+{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-board-row{
+  left: none;
+  border: none;
+  color: white;
+  list-style: none;
+  height: 40px;
+  padding: 0;
+}
+
+.board-cell
+{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding:5px;
+    font-size: large;
+}
+
+.active{
+  background-color: white;
+  border-width: medium;
+  padding: 2px;
+  border: 2px;
+  color: green;
+}
+
+#players > li{
+  margin-bottom: 10px;
+  font-size: small;
+}
