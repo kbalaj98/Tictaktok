@@ -6,11 +6,16 @@ import MoveHistory from './components/history/MoveHistory';
 import {combinations} from './components/winner/WinnningCombination'
 import Result from './components/winner/Result';
 
-const initailBoard = [
+const INITIAL_BOARD = [
   [null,null,null],
   [null,null,null],
   [null,null,null]
 ]
+
+const PLAYERS={
+  X: "Player 1",
+  O: "Player 2"
+}
 
 function getCurrentSymbol(moves)
 {
@@ -41,27 +46,28 @@ function getWinner(board)
     return null;
 }
 
+function derivedBoard(moves)
+{
+  const board = [...INITIAL_BOARD.map((arr)=>[...arr])]
+
+  for(let move of moves)
+  {
+    board[move.pos.row][move.pos.col] = move.currsymbol
+  }
+
+  return board
+}
+
 
 
 function App() 
 {
 
   const[moves,setMoves] = useState([])
-  const[players,setPlayers] = useState({
-    X: "Player 1",
-    O: "Player 2"
-  })
+  const[players,setPlayers] = useState(PLAYERS)
 
   let cSymbol = getCurrentSymbol(moves)
-
-  
-
-  const board = [...initailBoard.map((arr)=>[...arr])]
-
-  for(let move of moves)
-  {
-    board[move.pos.row][move.pos.col] = move.currsymbol
-  }
+  const board = derivedBoard(moves)
 
   let WINNER = getWinner(board);
   let DRAW = (!WINNER && moves.length===9) ? true : false
@@ -95,12 +101,12 @@ function App()
          
         <div className="game-container">
           <ol id="players">
-            <Player name="Player 1" symbol="X" isActive={cSymbol==="X"} nameUpdate={updateName}/>
-            <Player name="Player 2" symbol="O" isActive={cSymbol==="O"} nameUpdate={updateName}/>   
+            <Player name={PLAYERS.X} symbol="X" isActive={cSymbol==="X"} nameUpdate={updateName}/>
+            <Player name={PLAYERS.O} symbol="O" isActive={cSymbol==="O"} nameUpdate={updateName}/>   
             <GameBoard currBoard={board} updateMove={updateCurrMove} />
           </ol>
         </div>
-        {(WINNER || DRAW )? <Result winner={WINNER && WINNER==='X'?players.X:players.O} rematch={gameReset}/> : null}
+        {(WINNER || DRAW )? <Result winner={WINNER && WINNER==='X'?players.X:DRAW?null:players.O} rematch={gameReset}/> : null}
       </menu>
       <menu>
         <div className="move-history">
