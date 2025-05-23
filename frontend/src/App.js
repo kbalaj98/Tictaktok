@@ -6,7 +6,7 @@ import MoveHistory from './components/history/MoveHistory';
 import {combinations} from './components/winner/WinnningCombination'
 import Result from './components/winner/Result';
 
-const board = [
+const initailBoard = [
   [null,null,null],
   [null,null,null],
   [null,null,null]
@@ -24,7 +24,7 @@ function getCurrentSymbol(moves)
     return symbol
 }
 
-function getWinner()
+function getWinner(board)
 {
   for(let combination of combinations)
   {
@@ -47,18 +47,38 @@ function App()
 {
 
   const[moves,setMoves] = useState([])
-  const[player1,setPlayer1] = useState('Player 1')
-  const[player2,setPlayer2] = useState('Player 2')
+  const[players,setPlayers] = useState({
+    X: "Player 1",
+    O: "Player 2"
+  })
 
   let cSymbol = getCurrentSymbol(moves)
 
-  let WINNER = getWinner();
+  
 
-  let DRAW = (!WINNER && moves.length===9) ? true : false
+  const board = [...initailBoard.map((arr)=>[...arr])]
 
   for(let move of moves)
   {
     board[move.pos.row][move.pos.col] = move.currsymbol
+  }
+
+  let WINNER = getWinner(board);
+  let DRAW = (!WINNER && moves.length===9) ? true : false
+
+  function gameReset()
+  {
+    setMoves([])
+  }
+
+  function updateName(symbol,name)
+  {
+     setPlayers(players=>{
+         return {
+            ...players,
+            [symbol]:name
+         }
+     })
   }
 
 
@@ -68,23 +88,19 @@ function App()
   }
 
 
-  function updatePlayer(player,symbol)
-  {
-     symbol === 'X' ? setPlayer1(player) :setPlayer2(player);
-  }
-
   return (
     <>
       <section>
       <menu>
-        {WINNER || DRAW ? <Result winner={WINNER && WINNER==='X'?player1:player2}/> :
+         
         <div className="game-container">
           <ol id="players">
-            <Player name={player1} symbol="X" isActive={cSymbol==="X"} nameUpdate={updatePlayer}/>
-            <Player name={player2} symbol="O" isActive={cSymbol==="O"} nameUpdate={updatePlayer}/>   
+            <Player name="Player 1" symbol="X" isActive={cSymbol==="X"} nameUpdate={updateName}/>
+            <Player name="Player 2" symbol="O" isActive={cSymbol==="O"} nameUpdate={updateName}/>   
             <GameBoard currBoard={board} updateMove={updateCurrMove} />
           </ol>
-        </div>}
+        </div>
+        {(WINNER || DRAW )? <Result winner={WINNER && WINNER==='X'?players.X:players.O} rematch={gameReset}/> : null}
       </menu>
       <menu>
         <div className="move-history">

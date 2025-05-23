@@ -32,6 +32,18 @@ code {
   /* text-align: center; */
 }
 
+.result-container{
+
+  position: absolute;
+  top: 50%;
+  right:40%;
+  height:250px;
+  color:white;
+  background-color: rgba(0, 0, 0, 0.861);
+  padding: 25px;
+
+}
+
 .move-history{
   position: absolute;
   border-style: inset;
